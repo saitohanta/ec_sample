@@ -12,4 +12,16 @@ class Item < ApplicationRecord
   validates :introduction, presence: true
   validates :genre_id, presence: true
   validates :price, presence: true
+
+  def item_status
+    if is_sold_out == true
+      "販売停止中"
+    else
+      "販売中"
+    end
+  end
+
+  def with_tax_price
+    (price * 1.08).floor
+  end
 end
