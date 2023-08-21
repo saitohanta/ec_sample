@@ -1,1 +1,17 @@
 @use '~bootstrap/scss/bootstrap';
+
+.footerFixed{
+    min-height: 100vh;
+    position: relative;
+    padding-bottom: 120px;
+    box-sizing: border-box;
+}
+
+
+footer{
+    width: 100%;
+    text-align: center;
+    padding: 30px 0;
+    position: absolute;
+    bottom: 0;
+}
