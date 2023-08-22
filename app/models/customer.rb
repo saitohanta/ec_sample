@@ -24,4 +24,9 @@ class Customer < ApplicationRecord
     last_name_kana + '' + first_name_kana
   end
 
+  #論理削除
+  def active_for_authentication?
+    super && (is_deleted == false)
+  end
+
 end
