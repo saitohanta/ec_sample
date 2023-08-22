@@ -19,7 +19,7 @@ class Public::CustomersController < ApplicationController
   def unsubscribe
   end
 
-  def withdrawl
+  def withdrawal
     @customer = Customer.find(params[:id])
     @customer.update(is_deleted: true)
     reset_session
