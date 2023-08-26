@@ -1,2 +1,23 @@
-<h1>Public::Homes#top</h1>
-<p>Find me in app/views/public/homes/top.html.erb</p>
+<div class="container mt-5" id="container">
+  <div class="row">
+    <div class="col">
+      <div class="mt-5">
+        <h3><strong>新着商品</strong></h3>
+        <div class="row mt-4">
+          <ul class="slider">
+            <% @items.each do |item| %>
+              <%= link_to item_path(item) do %>
+                <p class="caption mx-2"><%= image_tag item.image, size: '250x200' %></p>
+              <% end %>
+                <p class="caption"><%= item.name %></p>
+                <p class="caption">¥<%= item.with_tax_price.to_s(:delimited) %></p>
+            <% end %>
+          </ul>
+        </div>
+        <p class="text-center mt-5">
+          <%= link_to 'すべての商品を見る', items_path, class: "link" %>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
