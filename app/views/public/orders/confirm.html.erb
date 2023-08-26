@@ -1,0 +1,75 @@
+<div class = "container">
+  <div class = "row mt-3">
+    <h5 class="m-3" style="background-color: #ccc;" align="center">注文情報確認</h5>
+  </div>
+  <div class = "row">
+    <div class = "col-8">
+      <table class = "table table-bordered">
+          <thead class = "table-secondary">
+            <tr>
+              <th>商品名</th>
+              <th>単価（税込）</th>
+              <th>数量</th>
+              <th>小計</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% total = 0 %>
+            <% @cart_items.each do |cart_item| %>
+            <tr>
+              <td>
+                <%= image_tag cart_item.item.image, size: "30x30" %>
+                <%= cart_item.item.name %>
+              </td>
+              <td><%= (cart_item.item.price*1.08).to_i %></td>
+              <td><%= cart_item.quantity %></td>
+              <td>
+                <!--小計の計算-->
+                <% subtotal = ((cart_item.item.price*cart_item.quantity)*1.08).to_i %>
+                <!--小計を表示-->
+                <%= subtotal %>
+              </td>
+            </tr>
+            <% total += (cart_item.item.price*cart_item.quantity)*1.08 %>
+            <% end %>
+          </tbody>
+      </table>
+    </div>
+    <div class = "col-3 offset-1">
+      <table class = "table table-bordered">
+        <% @order.shipping_fee = 800 %>
+        <tr><th class = "table-secondary">送料</th><td><%= @order.shipping_fee %></td></tr>
+        <tr><th class = "table-secondary">商品合計</th><td><%= total.to_i %></td></tr>
+        <% @order.total_price = @order.shipping_fee + total.to_i %>
+        <tr><th class = "table-secondary">請求金額</th><td><%= @order.total_price %></td></tr>
+      </table>
+    </div>
+  </div>
+  <div class = "row">
+    <table class = "table table-borderless">
+      <tr>
+        <th class = "col-2">支払方法</th>
+          <td class = "col"><%= @order.payment_method_i18n %></td>
+      </tr>
+      <tr>
+        <th>お届け先</th>
+          <td class = "col">
+            〒<%= @order.ship_postcode %>
+              <%= @order.ship_address %><br>
+              <%= @order.ship_name %>
+          </td>
+      </tr>
+    </table>
+  </div>
+  <div class="row justify-content-center">
+    <%= form_with model: @order, url: orders_path, method: :post, local: true do |f| %>
+      <%= f.hidden_field :payment_method %>
+      <%= f.hidden_field :ship_postcode %>
+      <%= f.hidden_field :ship_address %><br>
+      <%= f.hidden_field :ship_name %>
+      <%= f.hidden_field :shipping_fee, value: @order.shipping_fee %>
+      <%= f.hidden_field :total_price %>
+      <%= f.submit "注文を確定する", class: "btn btn-success" %>
+    <% end %>
+  </div>
+</div>
