@@ -1,14 +1,25 @@
-<%= image_tag @item.image, size: "300x200" %>
-<h4><%= @item.name %></h4>
-<%= @item.introduction %>
-<h5>¥<%= @item.with_tax_price.to_s(:delimited) %><small>（税込）</h5>
-
-<% if customer_signed_in? %>
-  <%= form_with model:@cart_item do |f| %>
-    <%= f.number_field :quantity, in: 1..100 %>
-    <%= f.hidden_field :item_id, :value => @item.id %>
-    <%= f.submit "カートに入れる", class: "btn btn-success" %>
-  <% end %>
-<% else  %>
-  <p class="mt-5">※ログインするとカートに入れられるようになります。</p>
-<% end %>
+<div class='container'>
+  <div class='row mt-5'>
+    <div>
+      <div class="col-md-12 d-flex">
+        <div class="mr-5">
+          <%= image_tag @item.image, size: "300x200" %>
+        </div>
+        <div class="ml-5">
+          <h4 class="mb-4"><%= @item.name %></h4>
+          <h5 class="mb-3"><%= @item.introduction %></h5>
+          <h5 class="mb-3">¥<%= @item.with_tax_price.to_s(:delimited) %><small>（税込）</h5>
+          <% if customer_signed_in? %>
+            <%= form_with model:@cart_item do |f| %>
+              <%= f.number_field :quantity, in: 1..100 %>
+              <%= f.hidden_field :item_id, :value => @item.id %>
+              <%= f.submit "カートに入れる", class: "btn btn-success" %>
+            <% end %>
+          <% else  %>
+            <p class="mt-5">※ログインするとカートに入れられるようになります。</p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

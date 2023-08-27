@@ -1,21 +1,45 @@
-<h4>配送先登録 / 一覧</h4>
-<%= form_with model: @address, url: addresses_path do |f| %>
-  郵便番号（ハイフンなし）
-  <%= f.text_field :postcode, placeholder: "0000000" %>
-  住所
-  <%= f.text_field :address, placeholder: "東京都渋谷区代々木神園町0-0" %>
-  宛名
-  <%= f.text_field :name, placeholder: "令和道子" %>
-  <%= f.submit "新規登録" %>
-<% end %>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h4>配送先登録 / 一覧</h4>
+      <table class="table table-borderless">
+        <%= form_with model: @address, url: addresses_path do |f| %>
+          <tr>
+            <td>郵便番号（ハイフンなし）</td>
+            <td><%= f.text_field :postcode, placeholder: "0000000" %></td>
+          </tr>
+          <tr>
+            <td>住所</td>
+            <td><%= f.text_field :address, placeholder: "東京都渋谷区代々木神園町0-0" %></td>
+          </tr>
+          <tr>
+            <td>宛名</td>
+            <td><%= f.text_field :name, placeholder: "令和道子" %></td>
+            <td><%= f.submit "新規登録", class: "btn btn-success btn-sm" %></td>
+          </tr>
+        <% end %>
+      </table>
 
-<% @addresses.each do |address| %>
-  郵便番号
-  <%= address.postcode %>
-  住所
-  <%= address.address %>
-  宛名
-  <%= address.name %>
-  <%= link_to "編集する", edit_address_path(address) %>
-  <%= link_to "削除する", address_path(address), method: :delete %>
-<% end %>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>郵便番号</th>
+            <th>住所</th>
+            <th>宛名</th>
+            <th></th>
+          </tr>
+        </thead>
+      <% @addresses.each do |address| %>
+        <tr>
+          <td><%= address.postcode %></td>
+          <td><%= address.address %></td>
+          <td><%= address.name %></td>
+          <td>
+            <%= link_to "編集する", edit_address_path(address), class: "btn btn-success btn-sm" %>
+            <%= link_to "削除する", address_path(address), method: :delete, "data-confirm" => "本当に削除しますか？", class: "btn btn-danger btn-sm" %>
+          </td>
+        </tr>
+      <% end %>
+    </div>
+  </div>
+</div>
